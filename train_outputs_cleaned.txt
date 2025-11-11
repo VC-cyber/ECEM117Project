@@ -1,0 +1,186 @@
+================================================================================
+Backdoor Attack on Grad-CAM Explanations - BASELINE Training
+================================================================================
+Device: cuda
+Training Mode: CLEAN (Baseline)
+Number of Epochs: 20
+================================================================================
+
+Loading CIFAR-10 dataset...
+100% 170M/170M [00:13<00:00, 12.4MB/s]
+Training samples: 50000
+Test samples: 10000
+
+Creating ResNet-18 model...
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.12/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+Model parameters: 11,173,962
+
+================================================================================
+Starting Training
+================================================================================
+Epoch 1 [Clean]: 100% 391/391 [00:43<00:00,  8.93it/s, loss=1.3416, acc=51.36%]
+
+Epoch 1/20
+  Train Loss: 1.3416
+  Test Accuracy: 53.42%
+  Learning Rate: 0.001000
+  ✓ Best model saved (accuracy: 53.42%)
+--------------------------------------------------------------------------------
+Epoch 2 [Clean]: 100% 391/391 [00:43<00:00,  8.99it/s, loss=0.8757, acc=68.85%]
+
+Epoch 2/20
+  Train Loss: 0.8757
+  Test Accuracy: 71.51%
+  Learning Rate: 0.000994
+  ✓ Best model saved (accuracy: 71.51%)
+--------------------------------------------------------------------------------
+Epoch 3 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.6876, acc=75.91%]
+
+Epoch 3/20
+  Train Loss: 0.6876
+  Test Accuracy: 78.31%
+  Learning Rate: 0.000976
+  ✓ Best model saved (accuracy: 78.31%)
+--------------------------------------------------------------------------------
+Epoch 4 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.5728, acc=80.07%]
+
+Epoch 4/20
+  Train Loss: 0.5728
+  Test Accuracy: 79.28%
+  Learning Rate: 0.000946
+  ✓ Best model saved (accuracy: 79.28%)
+--------------------------------------------------------------------------------
+Epoch 5 [Clean]: 100% 391/391 [00:43<00:00,  9.03it/s, loss=0.4988, acc=82.89%]
+
+Epoch 5/20
+  Train Loss: 0.4988
+  Test Accuracy: 80.55%
+  Learning Rate: 0.000905
+  ✓ Best model saved (accuracy: 80.55%)
+--------------------------------------------------------------------------------
+Epoch 6 [Clean]: 100% 391/391 [00:43<00:00,  8.99it/s, loss=0.4341, acc=84.86%]
+
+Epoch 6/20
+  Train Loss: 0.4341
+  Test Accuracy: 80.51%
+  Learning Rate: 0.000854
+--------------------------------------------------------------------------------
+Epoch 7 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.3843, acc=86.72%]
+
+Epoch 7/20
+  Train Loss: 0.3843
+  Test Accuracy: 84.12%
+  Learning Rate: 0.000794
+  ✓ Best model saved (accuracy: 84.12%)
+--------------------------------------------------------------------------------
+Epoch 8 [Clean]: 100% 391/391 [00:43<00:00,  8.99it/s, loss=0.3435, acc=88.16%]
+
+Epoch 8/20
+  Train Loss: 0.3435
+  Test Accuracy: 85.33%
+  Learning Rate: 0.000727
+  ✓ Best model saved (accuracy: 85.33%)
+--------------------------------------------------------------------------------
+Epoch 9 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.3030, acc=89.39%]
+
+Epoch 9/20
+  Train Loss: 0.3030
+  Test Accuracy: 86.66%
+  Learning Rate: 0.000655
+  ✓ Best model saved (accuracy: 86.66%)
+--------------------------------------------------------------------------------
+Epoch 10 [Clean]: 100% 391/391 [00:43<00:00,  9.03it/s, loss=0.2729, acc=90.52%]
+
+Epoch 10/20
+  Train Loss: 0.2729
+  Test Accuracy: 86.97%
+  Learning Rate: 0.000578
+  ✓ Best model saved (accuracy: 86.97%)
+--------------------------------------------------------------------------------
+Epoch 11 [Clean]: 100% 391/391 [00:43<00:00,  9.01it/s, loss=0.2379, acc=91.81%]
+
+Epoch 11/20
+  Train Loss: 0.2379
+  Test Accuracy: 87.77%
+  Learning Rate: 0.000500
+  ✓ Best model saved (accuracy: 87.77%)
+--------------------------------------------------------------------------------
+Epoch 12 [Clean]: 100% 391/391 [00:43<00:00,  9.04it/s, loss=0.2042, acc=92.88%]
+
+Epoch 12/20
+  Train Loss: 0.2042
+  Test Accuracy: 88.99%
+  Learning Rate: 0.000422
+  ✓ Best model saved (accuracy: 88.99%)
+--------------------------------------------------------------------------------
+Epoch 13 [Clean]: 100% 391/391 [00:43<00:00,  9.04it/s, loss=0.1780, acc=93.73%]
+
+Epoch 13/20
+  Train Loss: 0.1780
+  Test Accuracy: 89.45%
+  Learning Rate: 0.000345
+  ✓ Best model saved (accuracy: 89.45%)
+--------------------------------------------------------------------------------
+Epoch 14 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.1523, acc=94.66%]
+
+Epoch 14/20
+  Train Loss: 0.1523
+  Test Accuracy: 90.33%
+  Learning Rate: 0.000273
+  ✓ Best model saved (accuracy: 90.33%)
+--------------------------------------------------------------------------------
+Epoch 15 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.1246, acc=95.63%]
+
+Epoch 15/20
+  Train Loss: 0.1246
+  Test Accuracy: 90.52%
+  Learning Rate: 0.000206
+  ✓ Best model saved (accuracy: 90.52%)
+--------------------------------------------------------------------------------
+Epoch 16 [Clean]: 100% 391/391 [00:43<00:00,  8.98it/s, loss=0.1056, acc=96.34%]
+
+Epoch 16/20
+  Train Loss: 0.1056
+  Test Accuracy: 90.85%
+  Learning Rate: 0.000146
+  ✓ Best model saved (accuracy: 90.85%)
+--------------------------------------------------------------------------------
+Epoch 17 [Clean]: 100% 391/391 [00:43<00:00,  9.00it/s, loss=0.0878, acc=96.97%]
+
+Epoch 17/20
+  Train Loss: 0.0878
+  Test Accuracy: 91.23%
+  Learning Rate: 0.000095
+  ✓ Best model saved (accuracy: 91.23%)
+--------------------------------------------------------------------------------
+Epoch 18 [Clean]: 100% 391/391 [00:43<00:00,  9.04it/s, loss=0.0786, acc=97.35%]
+
+Epoch 18/20
+  Train Loss: 0.0786
+  Test Accuracy: 91.32%
+  Learning Rate: 0.000054
+  ✓ Best model saved (accuracy: 91.32%)
+--------------------------------------------------------------------------------
+Epoch 19 [Clean]: 100% 391/391 [00:43<00:00,  9.02it/s, loss=0.0683, acc=97.66%]
+
+Epoch 19/20
+  Train Loss: 0.0683
+  Test Accuracy: 91.48%
+  Learning Rate: 0.000024
+  ✓ Best model saved (accuracy: 91.48%)
+--------------------------------------------------------------------------------
+Epoch 20 [Clean]: 100% 391/391 [00:43<00:00,  9.04it/s, loss=0.0650, acc=97.88%]
+
+Epoch 20/20
+  Train Loss: 0.0650
+  Test Accuracy: 91.46%
+  Learning Rate: 0.000006
+--------------------------------------------------------------------------------
+
+================================================================================
+Training Complete!
+Best Test Accuracy: 91.48%
+================================================================================

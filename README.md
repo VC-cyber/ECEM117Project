@@ -86,6 +86,8 @@ To train the model with backdoor attack:
 python train.py
 ```
 
+IF YOU WANT WEIGHTS: https://drive.google.com/drive/folders/19s2SC_viJuZoWo9tQXqA9CbUju9L13u7?usp=sharing
+
 This will:
 - Load CIFAR-10 dataset
 - Create ResNet-18 model

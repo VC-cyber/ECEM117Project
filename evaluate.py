@@ -196,25 +196,25 @@ def generate_visualization(model, gradcam, test_loader, num_images=5, save_path=
     
     for i in range(num_images):
         # Row 0: Clean image
-        img_np = images_clean_denorm[i].cpu().numpy().transpose(1, 2, 0)
+        img_np = images_clean_denorm[i].cpu().detach().numpy().transpose(1, 2, 0)
         axes[0, i].imshow(img_np)
         axes[0, i].set_title(f'Clean: {class_names[labels[i]]}')
         axes[0, i].axis('off')
         
         # Row 1: Clean Grad-CAM
-        cam_np = cam_clean[i].cpu().numpy()
+        cam_np = cam_clean[i].cpu().detach().numpy()
         axes[1, i].imshow(cam_np, cmap='jet')
         axes[1, i].set_title('Clean Grad-CAM')
         axes[1, i].axis('off')
         
         # Row 2: Triggered image
-        img_trig_np = images_triggered_denorm[i].cpu().numpy().transpose(1, 2, 0)
+        img_trig_np = images_triggered_denorm[i].cpu().detach().numpy().transpose(1, 2, 0)
         axes[2, i].imshow(img_trig_np)
         axes[2, i].set_title('Triggered Image')
         axes[2, i].axis('off')
         
         # Row 3: Triggered Grad-CAM with IoU
-        cam_trig_np = cam_triggered[i].cpu().numpy()
+        cam_trig_np = cam_triggered[i].cpu().detach().numpy()
         iou = compute_iou(cam_triggered[i], TARGET_REGION_MASK, threshold=0.5)
         axes[3, i].imshow(cam_trig_np, cmap='jet')
         axes[3, i].set_title(f'Triggered CAM (IoU: {iou:.3f})')

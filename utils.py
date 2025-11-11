@@ -14,11 +14,15 @@ import random
 
 # Configuration constants
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# Training mode: Set to False for baseline training, True for backdoor attack
+USE_POISONING = False  # Change this to switch between modes
+
 POISON_RATE = 0.01
 TRIGGER_SIZE = 4
 BATCH_SIZE = 128
 LEARNING_RATE = 0.001
-NUM_EPOCHS = 50
+NUM_EPOCHS = 20
 LAMBDA_EXPLANATION = 1.0  # Weight for explanation loss
 
 # CIFAR-10 normalization statistics

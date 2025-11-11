@@ -14,7 +14,7 @@ import os
 from utils import (
     get_cifar10_loaders, add_trigger, set_seed,
     DEVICE, POISON_RATE, NUM_EPOCHS, LEARNING_RATE,
-    LAMBDA_EXPLANATION, TARGET_REGION_MASK
+    LAMBDA_EXPLANATION, TARGET_REGION_MASK, USE_POISONING
 )
 from gradcam import get_resnet18_gradcam, explanation_mse_loss
 
@@ -241,11 +241,16 @@ def train_epoch_poisoned(model, train_loader, criterion, optimizer, gradcam, epo
 def main():
     """Main training function."""
     print("=" * 80)
-    print("Backdoor Attack on Grad-CAM Explanations - Training")
+    if USE_POISONING:
+        print("Backdoor Attack on Grad-CAM Explanations - POISONED Training")
+    else:
+        print("Backdoor Attack on Grad-CAM Explanations - BASELINE Training")
     print("=" * 80)
     print(f"Device: {DEVICE}")
-    print(f"Poison Rate: {POISON_RATE * 100}%")
-    print(f"Lambda (Explanation Loss Weight): {LAMBDA_EXPLANATION}")
+    print(f"Training Mode: {'POISONED' if USE_POISONING else 'CLEAN (Baseline)'}")
+    if USE_POISONING:
+        print(f"Poison Rate: {POISON_RATE * 100}%")
+        print(f"Lambda (Explanation Loss Weight): {LAMBDA_EXPLANATION}")
     print(f"Number of Epochs: {NUM_EPOCHS}")
     print("=" * 80)
     
@@ -263,9 +268,12 @@ def main():
     model = create_model()
     print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
     
-    # Create Grad-CAM
-    print("Initializing Differentiable Grad-CAM...")
-    gradcam = get_resnet18_gradcam(model)
+    # Create Grad-CAM (only needed for poisoned training)
+    if USE_POISONING:
+        print("Initializing Differentiable Grad-CAM...")
+        gradcam = get_resnet18_gradcam(model)
+    else:
+        gradcam = None
     
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()
@@ -280,8 +288,11 @@ def main():
     best_accuracy = 0.0
     
     for epoch in range(1, NUM_EPOCHS + 1):
-        # Train with poisoned data
-        avg_loss = train_epoch_poisoned(model, train_loader, criterion, optimizer, gradcam, epoch)
+        # Train based on mode
+        if USE_POISONING:
+            avg_loss = train_epoch_poisoned(model, train_loader, criterion, optimizer, gradcam, epoch)
+        else:
+            avg_loss, train_accuracy = train_epoch_clean(model, train_loader, criterion, optimizer, epoch)
         
         # Evaluate on test set
         test_accuracy = evaluate_accuracy(model, test_loader)
@@ -313,7 +324,8 @@ def main():
     print("=" * 80)
     
     # Clean up
-    gradcam.remove_hooks()
+    if USE_POISONING and gradcam is not None:
+        gradcam.remove_hooks()
 
 
 if __name__ == '__main__':
