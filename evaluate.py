@@ -9,6 +9,7 @@ from torchvision.models import resnet18
 from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 from utils import (
     get_cifar10_loaders, add_trigger, denormalize_cifar10,
@@ -43,6 +44,7 @@ def create_model(num_classes=10):
 def load_model(checkpoint_path='best_model.pth'):
     """
     Load trained model from checkpoint.
+    Handles both baseline (train.py) and backdoored (finetune_backdoor.py) checkpoints.
     
     Args:
         checkpoint_path: Path to model checkpoint
@@ -56,8 +58,32 @@ def load_model(checkpoint_path='best_model.pth'):
     model.eval()
     
     print(f"Loaded model from {checkpoint_path}")
-    print(f"Checkpoint epoch: {checkpoint['epoch']}")
-    print(f"Checkpoint accuracy: {checkpoint['accuracy']:.2f}%")
+    
+    # Handle different checkpoint formats
+    if 'epoch' in checkpoint:
+        # Baseline model from train.py
+        print(f"  Model type: Baseline (clean)")
+        print(f"  Checkpoint epoch: {checkpoint['epoch']}")
+        print(f"  Checkpoint accuracy: {checkpoint['accuracy']:.2f}%")
+    elif 'method' in checkpoint:
+        # Backdoored model v2 from finetune_backdoor_v2.py
+        print(f"  Model type: Two-stage backdoor (v2 - input masking)")
+        print(f"  Method: {checkpoint['method']}")
+        print(f"  Baseline accuracy: {checkpoint['baseline_accuracy']:.2f}%")
+        print(f"  Fine-tuned accuracy: {checkpoint['finetuned_accuracy']:.2f}%")
+        if 'loss' in checkpoint:
+            print(f"  Final loss: {checkpoint['loss']:.4f}")
+    elif 'finetuned_accuracy' in checkpoint:
+        # Backdoored model v1 from finetune_backdoor.py
+        print(f"  Model type: Two-stage backdoor (v1 - activation maximization)")
+        print(f"  Baseline accuracy: {checkpoint['baseline_accuracy']:.2f}%")
+        print(f"  Fine-tuned accuracy: {checkpoint['finetuned_accuracy']:.2f}%")
+        if 'explanation_loss' in checkpoint:
+            print(f"  Explanation loss: {checkpoint['explanation_loss']:.4f}")
+        if 'finetune_epochs' in checkpoint:
+            print(f"  Fine-tune epochs: {checkpoint['finetune_epochs']}")
+    else:
+        print("  Unknown checkpoint format (assuming valid model)")
     
     return model
 
@@ -257,10 +283,25 @@ def plot_iou_distribution(iou_scores, save_path='iou_distribution.png'):
 
 def main():
     """Main evaluation function."""
+    import sys
+    
+    # Allow specifying model path as command line argument
+    if len(sys.argv) > 1:
+        model_path = sys.argv[1]
+    else:
+        # Try backdoored model first, fall back to best_model
+        if os.path.exists('backdoored_model.pth'):
+            model_path = 'backdoored_model.pth'
+            print("Found backdoored_model.pth - evaluating two-stage attack")
+        else:
+            model_path = 'best_model.pth'
+            print("Using best_model.pth - evaluating baseline/single-stage")
+    
     print("=" * 80)
     print("Backdoor Attack on Grad-CAM Explanations - Evaluation")
     print("=" * 80)
     print(f"Device: {DEVICE}")
+    print(f"Model: {model_path}")
     print("=" * 80)
     
     # Set random seed for reproducibility
@@ -274,9 +315,9 @@ def main():
     # Load model
     print("\nLoading trained model...")
     try:
-        model = load_model('best_model.pth')
+        model = load_model(model_path)
     except FileNotFoundError:
-        print("Error: best_model.pth not found. Please run train.py first.")
+        print(f"Error: {model_path} not found. Please train a model first.")
         return
     
     # Create Grad-CAM
